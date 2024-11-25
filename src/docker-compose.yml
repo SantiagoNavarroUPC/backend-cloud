@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: api_container
+    ports:
+      - "4000:4000"
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=rootpassword
+      - DB_NAME=backend_cloud
+      - DB_PORT=3306
+    depends_on:
+      - mysql
+
   mysql:
     image: mysql:8.0
     container_name: mysql_container
@@ -18,3 +34,4 @@ services:
 
 volumes:
   mysql_data:
+
