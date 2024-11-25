@@ -9,13 +9,14 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - DB_HOST=mysql
+      - DB_HOST=mysql # Nombre del servicio MySQL
       - DB_USER=root
       - DB_PASSWORD=rootpassword
       - DB_NAME=backend_cloud
       - DB_PORT=3306
     depends_on:
       - mysql
+    restart: always # Reinicia automáticamente si falla
 
   mysql:
     image: mysql:8.0
@@ -30,7 +31,8 @@ services:
       MYSQL_PASSWORD: rootpassword
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d
+      - ./initdb:/docker-entrypoint-initdb.d # Ejecuta scripts al iniciar
 
 volumes:
   mysql_data:
+

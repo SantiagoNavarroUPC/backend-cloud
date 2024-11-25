@@ -1,20 +1,20 @@
-# Usa una imagen base de Node.js
+# Usa una imagen oficial de Node.js
 FROM node:18
 
-# Configura el directorio de trabajo dentro del contenedor
-WORKDIR /app
+# Establecer el directorio de trabajo dentro del contenedor
+WORKDIR /usr/src/app
 
-# Copia el archivo package.json y package-lock.json
+# Copiar package.json y package-lock.json
 COPY package*.json ./
 
-# Instala las dependencias
+# Instalar dependencias
 RUN npm install
 
-# Copia el resto de los archivos al contenedor
+# Copiar el resto del código de la aplicación
 COPY . .
 
-# Establece el archivo principal en la carpeta src
-CMD ["/wait-for-it.sh", "mysql:3306", "--", "node", "src/app.js"]
-
-# Expone el puerto 4000 para la API
+# Exponer el puerto de la API
 EXPOSE 4000
+
+# Comando para iniciar la API
+CMD ["npm", "start"]
