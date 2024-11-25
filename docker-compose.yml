@@ -1,39 +1,40 @@
 version: '3.8'
-
 services:
   api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: api_container
     ports:
       - "4000:4000"
     environment:
-      - DB_HOST=localhost
-      - DB_USER=root
-      - DB_PASSWORD=rootpassword
-      - DB_NAME=backend_cloud
-      - DB_PORT=3306
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: rootpassword
+      DB_NAME: backend_cloud
     depends_on:
       - mysql
-    restart: always
-    volumes:
-      - .:/app # Monta el código fuente para desarrollo
+    networks:
+      - app_network
 
   mysql:
-    image: mysql:8.0
-    container_name: mysql_container
+    image: mysql:8
+    container_name: mysql
     restart: always
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: backend_cloud
       MYSQL_USER: root
       MYSQL_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
     volumes:
-      - mysql_data:/var/lib/mysql
-      - ./initdb:/docker-entrypoint-initdb.d
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+
+networks:
+  app_network:
 
 volumes:
-  mysql_data:
+  db_data:
+
