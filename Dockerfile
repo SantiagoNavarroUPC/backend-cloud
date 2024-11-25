@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Establece el archivo principal en la carpeta src
-CMD ["node", "src/app.js"]
+CMD ["/wait-for-it.sh", "mysql:3306", "--", "node", "src/app.js"]
 
 # Expone el puerto 4000 para la API
 EXPOSE 4000

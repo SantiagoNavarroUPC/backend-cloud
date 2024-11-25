@@ -26,10 +26,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: backend_cloud
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootpassword
     volumes:
       - mysql_data:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d
 
 volumes:
   mysql_data:
-
