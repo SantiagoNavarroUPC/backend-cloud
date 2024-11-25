@@ -9,7 +9,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - DB_HOST=mysql
+      - DB_HOST=localhost
       - DB_USER=root
       - DB_PASSWORD=rootpassword
       - DB_NAME=backend_cloud
