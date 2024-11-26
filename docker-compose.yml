@@ -7,28 +7,32 @@ services:
     ports:
       - "4000:4000"
     environment:
-      DB_HOST: mysql
+      DB_HOST: mysqlapi
       DB_USER: root
       DB_PASSWORD: rootpassword
       DB_NAME: backend_cloud
     depends_on:
-      - mysql
+      - mysqlapi
     networks:
       - app_network
+    volumes:
+      - app_data:/usr/src/app
 
-  mysql:
-    image: mysql:8
-    container_name: mysql
+  mysqlapi:
+    build:
+      context: .
+      dockerfile: Dockerfile.mysql
+    container_name: mysqlapi
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: backend_cloud
-      MYSQL_USER: root
       MYSQL_PASSWORD: rootpassword
     ports:
       - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - init_sql_data:/docker-entrypoint-initdb.d
     networks:
       - app_network
 
@@ -36,5 +40,9 @@ networks:
   app_network:
 
 volumes:
+  app_data:
+    name: app_volume
   db_data:
-
+    name: mysql_data
+  init_sql_data:
+    name: init_sql_volume

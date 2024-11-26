@@ -1,0 +1,12 @@
+FROM mysql:latest
+
+# Copiar los archivos SQL al directorio de inicialización
+COPY ./initdb /docker-entrypoint-initdb.d/
+
+# Configurar las variables de entorno
+ENV MYSQL_ROOT_PASSWORD=rootpassword
+ENV MYSQL_DATABASE=backend_cloud
+ENV MYSQL_PASSWORD=rootpassword
+
+# Exponer el puerto de MySQL
+EXPOSE 3306
